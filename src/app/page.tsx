@@ -1,37 +1,104 @@
-export const dynamic = 'force-dynamic'
+'use client';
 
-export default function Index() {
+import { useState, useEffect } from 'react';
+import { NavigationBar } from '@/components/navigation-bar';
+import { HeroBanner } from '@/components/hero-banner';
+import { GameCard } from '@/components/game-card';
+import { CategoryPills } from '@/components/category-pills';
+import { Footer } from '@/components/footer';
+import { getTrendingGames, getNewReleases, getGamesByCategory, getRecentlyPlayed, GameCategory, Game } from '@/lib/games';
+
+export default function HomePage() {
+  const [selectedCategory, setSelectedCategory] = useState<GameCategory>('All');
+  const [recentlyPlayed, setRecentlyPlayed] = useState<Game[]>([]);
+
+  const trendingGames = getTrendingGames();
+  const newReleases = getNewReleases();
+  const filteredGames = getGamesByCategory(selectedCategory);
+
+  useEffect(() => {
+    setRecentlyPlayed(getRecentlyPlayed());
+  }, []);
+
   return (
-    <div className="min-h-screen flex items-center justify-center">
-      <div className="text-center max-w-2xl px-4">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your App</h1>
-        <p className="text-xl mb-6 text-gray-600">
-          This template is configured to be absolutely lenient - builds never fail on validation errors.
-        </p>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-left">
-          <div className="p-4 bg-green-50 rounded-lg border border-green-200">
-            <h3 className="font-semibold text-green-800 mb-2">✅ Always Builds</h3>
-            <ul className="text-green-700 space-y-1">
-              <li>• TypeScript errors ignored</li>
-              <li>• ESLint warnings ignored</li>
-              <li>• Global error boundaries</li>
-              <li>• Asset type safety</li>
-            </ul>
+    <div className="min-h-screen bg-background">
+      <NavigationBar />
+      <HeroBanner />
+
+      <main className="container mx-auto px-4 py-8 space-y-12">
+        {/* Recently Played Section */}
+        {recentlyPlayed.length > 0 && (
+          <section className="space-y-6">
+            <div className="flex items-center justify-between">
+              <h2 className="text-3xl font-bold text-foreground">RECENTLY PLAYED</h2>
+            </div>
+
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+              {recentlyPlayed.map((game) => (
+                <GameCard
+                  key={game.id}
+                  game={game}
+                />
+              ))}
+            </div>
+          </section>
+        )}
+
+        {/* Trending Games Section */}
+        <section id="trending" className="space-y-6">
+          <div className="flex items-center justify-between">
+            <h2 className="text-3xl font-bold text-foreground">TRENDING GAMES</h2>
           </div>
-          <div className="p-4 bg-blue-50 rounded-lg border border-blue-200">
-            <h3 className="font-semibold text-blue-800 mb-2">🚀 Production Ready</h3>
-            <ul className="text-blue-700 space-y-1">
-              <li>• Next.js 15.5.2 App Router</li>
-              <li>• Vercel optimized</li>
-              <li>• SSR/SEO friendly</li>
-              <li>• Browser API protection</li>
-            </ul>
+
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+            {trendingGames.map((game) => (
+              <GameCard
+                key={game.id}
+                game={game}
+                variant="featured"
+              />
+            ))}
           </div>
-        </div>
-        <p className="mt-6 text-gray-500">
-          Start building your amazing project here! This template will never fail builds due to validation errors.
-        </p>
-      </div>
+        </section>
+
+        {/* New Releases Section */}
+        <section className="space-y-6">
+          <div className="flex items-center justify-between">
+            <h2 className="text-3xl font-bold text-foreground">NEW RELEASES</h2>
+          </div>
+
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+            {newReleases.map((game) => (
+              <GameCard
+                key={game.id}
+                game={game}
+              />
+            ))}
+          </div>
+        </section>
+
+        {/* All Games with Category Filter */}
+        <section className="space-y-6">
+          <div className="space-y-4">
+            <h2 className="text-3xl font-bold text-foreground">ALL GAMES</h2>
+            <CategoryPills
+              selectedCategory={selectedCategory}
+              onCategoryChange={setSelectedCategory}
+            />
+          </div>
+
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+            {filteredGames.map((game) => (
+              <GameCard
+                key={game.id}
+                game={game}
+              />
+            ))}
+          </div>
+        </section>
+      </main>
+
+      <Footer />
     </div>
   );
 }
