@@ -7,7 +7,7 @@ import { Play, TrendingUp } from 'lucide-react';
 
 export function HeroBanner() {
   return (
-    <section className="relative w-full h-[400px] overflow-hidden bg-gradient-to-br from-primary/20 via-background to-secondary/20">
+    <section className="relative w-full h-[450px] overflow-hidden bg-gradient-to-br from-primary/30 via-background via-30% to-secondary/25">
       {/* Background Pattern */}
       <div className="absolute inset-0 bg-grid-white/[0.02] bg-[size:50px_50px]" />
 
@@ -44,13 +44,13 @@ export function HeroBanner() {
         <div className="hidden lg:flex flex-1 justify-center items-center relative">
           <div className="relative w-full h-full max-w-lg">
             {/* Main Hero Image */}
-            <div className="absolute inset-0 bg-gradient-to-r from-primary/30 to-secondary/30 rounded-2xl blur-3xl transform rotate-12" />
+            <div className="absolute inset-0 bg-gradient-to-r from-primary/40 to-secondary/40 rounded-2xl blur-3xl transform rotate-12" />
             <div className="relative z-10 w-full h-full rounded-2xl overflow-hidden bg-gradient-to-br from-primary/10 to-secondary/10 border border-primary/20">
               <Image
-                src="https://images.unsplash.com/photo-1542751371-adc38448a05e?w=500&h=400&fit=crop"
-                alt="Game Characters"
+                src="/generated/gaming-hero-image.png"
+                alt="Gaming Setup with Futuristic Design"
                 fill
-                className="object-cover opacity-80"
+                className="object-cover opacity-90"
                 sizes="500px"
               />
 
@@ -72,6 +72,8 @@ export function HeroBanner() {
       <div className="absolute top-20 left-10 w-4 h-4 bg-primary rounded-full animate-pulse opacity-60" />
       <div className="absolute top-32 right-20 w-6 h-6 bg-secondary rounded-full animate-pulse opacity-40 delay-1000" />
       <div className="absolute bottom-20 left-20 w-3 h-3 bg-primary rounded-full animate-pulse opacity-50 delay-500" />
+      <div className="absolute top-16 right-32 w-2 h-2 bg-primary/80 rounded-full animate-pulse opacity-70 delay-300" />
+      <div className="absolute bottom-32 right-16 w-5 h-5 bg-secondary/60 rounded-full animate-pulse opacity-45 delay-700" />
     </section>
   );
 }
