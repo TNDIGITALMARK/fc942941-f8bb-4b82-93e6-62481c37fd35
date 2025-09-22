@@ -10,6 +10,7 @@ import { cn } from '@/lib/utils';
 const navigationItems = [
   { label: 'Popular Games', href: '/' },
   { label: 'New Releases', href: '/new-releases' },
+  { label: 'Realeases', href: '/realeases' },
   { label: 'Categories', href: '/categories' },
 ];
 
